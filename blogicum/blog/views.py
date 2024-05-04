@@ -24,8 +24,8 @@ def index(request):
 def post_detail(request, id):
     """Описание записи в блоге"""
     template = 'blog/detail.html'
-    posts = get_object_or_404(some_posts(Post.objects), id=id)
-    context = {'post': posts}
+    post = get_object_or_404(some_posts(Post.objects), pk=id)
+    context = {'post': post}
     return render(request, template, context)
 
 
