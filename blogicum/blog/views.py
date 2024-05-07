@@ -4,6 +4,9 @@ from django.utils import timezone
 from .models import Post, Category
 
 
+NUM_POSTS_INDEX = 5
+
+
 def some_posts(post_objects):
     """Посты из БД"""
     return post_objects.filter(
@@ -16,15 +19,16 @@ def some_posts(post_objects):
 def index(request):
     """Главная страница"""
     template = 'blog/index.html'
-    post_list = some_posts(Post.objects).order_by('-pub_date')[:5]
+    post_list = some_posts(Post.objects).order_by(
+        '-pub_date')[:NUM_POSTS_INDEX]
     context = {'post_list': post_list}
     return render(request, template, context)
 
 
-def post_detail(request, id):
+def post_detail(request, post_id):
     """Описание записи в блоге"""
     template = 'blog/detail.html'
-    post = get_object_or_404(some_posts(Post.objects), pk=id)
+    post = get_object_or_404(some_posts(Post.objects), pk=post_id)
     context = {'post': post}
     return render(request, template, context)
 
