@@ -13,14 +13,13 @@ def some_posts(post_objects):
         pub_date__lte=timezone.now(),
         is_published=True,
         category__is_published=True
-    )
+    ).order_by('-pub_date')
 
 
 def index(request):
     """Главная страница"""
     template = 'blog/index.html'
-    post_list = some_posts(Post.objects).order_by(
-        '-pub_date')[:NUM_POSTS_INDEX]
+    post_list = some_posts(Post.objects)[:NUM_POSTS_INDEX]
     context = {'post_list': post_list}
     return render(request, template, context)
 
